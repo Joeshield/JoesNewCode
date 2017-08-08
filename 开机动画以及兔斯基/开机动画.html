@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>开机动画</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body,html{
+				height: 100%;
+				overflow: hidden;
+			}
+			@keyframes move{
+				from{
+					top:0
+				}
+				to{
+					top: -10px;
+				}
+			}
+			
+			#wrap{
+				position: relative;
+				height: 100%;
+				overflow: hidden;
+				background: gray;
+			}
+			
+  			#inner{
+  				position: absolute;
+  				top: 50%;
+  				left: 50%;
+  				transform: translate3d(-50% ,-50% ,0);
+  				font: 16px helvetica;
+  				white-space: nowrap;
+  			}
+  			
+  			#inner span{
+  				position: relative;
+  			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="inner">
+				<span>炉</span>
+				<span>石</span>
+				<span>传</span>
+				<span>说</span>
+				<span>真</span>
+				<span>尼</span>
+				<span>玛</span>
+				<span>好</span>
+				<span>玩</span>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		
+//		document.addEventListener("touchstart",function(ev){
+//			var ev = ev || event;
+//			ev.preventDefault();
+//		});
+		document.addEventListener("touchstart",function(ev){
+			ev=ev||event;
+			ev.preventDefault();
+		});
+		//适配
+//		(function(){
+//			var styleNode = document.createElement('style');
+//			var width = document.documentElement.clientWidth;
+//			styleNode.innerHTML = "html{font-size:"+(width/16)+" px !important}";
+//			document.head.appendChild(styleNode)
+//		})();
+		(function(){
+			var styleNode = document.createElement("style");
+			var width = document.documentElement.clientWidth;
+			styleNode.innerHTML="html{font-size:"+(width/16)+"px !important}";
+			document.head.appendChild(styleNode);
+		})();
+		
+		//利用js动态添加样式
+		window.onload = function(){
+			setLoading();
+			function setLoading(){
+				var spanNodes = document.querySelectorAll("#inner span");
+				var colors = ["red","yellow","orange","green","blue","pink","purple"];
+				for (var i=0;i<spanNodes.length;i++) {
+					spanNodes[i].style.color = colors[i%colors.length];
+					spanNodes[i].style.animation = "move 0.4s infinite "+(i*0.2)+"s alternate"
+				}
+			}
+		}
+	</script>
+</html>

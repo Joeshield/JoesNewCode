@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="css/eric-meyer-reset.css" />
+		<title></title>
+		<style type="text/css">
+			
+			body,html{
+				height: 100%;
+				overflow: hidden;
+			}
+			@keyframes move{
+				from{
+					transform: rotateY(0);
+				}
+				to{
+					transform: rotateY(360deg);
+				}
+			}
+			#wrap{
+				background: gray;
+				height: 100%;
+				overflow: hidden;
+				perspective: 300px;
+				transform-style: preserve-3d;
+			}
+			
+			#inner{
+				height: 100%;
+				transform-style: preserve-3d;
+				/*在inner处也需要加上transform-style : preserve-3d*/
+			}
+			#logo{
+				position: absolute;
+				top: 50%;
+				left: 35%;
+				/*transform: translate3d(-50%,-50%,0);*/
+				width: 30%;
+				margin-top: -18%;
+				/*位置可调整，具体参考UI*/
+				animation: move linear 1s infinite;
+			}
+			
+			#logo img{
+				width: 100%;
+				display: block;
+			}
+			
+			#text{
+				position: absolute;
+				top: 50%;
+				width: 100%;
+				text-align: center;				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="inner">
+				<div id="logo">
+					<img src="img/logo.png"/>
+				</div>
+				<p id="text">
+					已加载100%
+				</p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/data.js"></script>
+	<script type="text/javascript">
+		document.addEventListener("touchstart",function(ev){
+			var ev = ev ||event;
+			ev.preventDefault();
+		});
+		
+		window.onload = function(){
+			var textNode = document.querySelector("#text");
+			var flag = 0;
+			
+			var arr = [];
+			for (item in imgData){
+				arr = arr.concat(imgData[item]);
+				//将js中数组里的所有属性赋值给arr
+			}
+			
+			for (var i =0;i<arr.length;i++) {
+				var imgNode = new Image();
+				imgNode.src = arr[i];
+				
+				imgNode.onload = function(){
+					flag ++;
+					textNode.innerHTML = "已加载" +Math.round((flag/arr.length)*100)+ "%"
+				}
+			}
+		}
+	</script>
+</html>
